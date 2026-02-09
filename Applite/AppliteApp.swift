@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 import Sparkle
-import Kingfisher
 
 @main
 struct AppliteApp: App {
     @NSApplicationDelegateAdaptor(ApplicationDelegate.self) var appDelegate
 
     @StateObject var caskManager = CaskManager()
+    @StateObject var iCloudSyncManager = ICloudSyncManager()
     
     @AppStorage(Preferences.colorSchemePreference.rawValue) var colorSchemePreference: ColorSchemePreference = .system
     @AppStorage(Preferences.setupComplete.rawValue) var setupComplete: Bool = false
@@ -35,9 +35,6 @@ struct AppliteApp: App {
     
     init() {
         updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-
-        // Setup network proxy for Kingfisher
-        KingfisherManager.shared.downloader.sessionConfiguration = NetworkProxyManager.getURLSessionConfiguration()
     }
     
     var body: some Scene {
@@ -45,6 +42,7 @@ struct AppliteApp: App {
             if setupComplete {
                 ContentView()
                     .environmentObject(caskManager)
+                    .environmentObject(iCloudSyncManager)
                     .frame(minWidth: 970, minHeight: 520)
                     .preferredColorScheme(selectedColorScheme)
             } else {
@@ -60,6 +58,7 @@ struct AppliteApp: App {
         
         Settings {
             SettingsView(updater: updaterController.updater)
+                .environmentObject(iCloudSyncManager)
                 .preferredColorScheme(selectedColorScheme)
         }
         .windowResizability(.contentSize)

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ButtonKit
 
 extension ContentView {
     @ViewBuilder
@@ -32,7 +31,10 @@ extension ContentView {
             
         case .activeTasks:
             ActiveTasksView()
-            
+
+        case .appHistory:
+            AppHistoryView()
+
         case .appMigration:
             AppMigrationView()
             

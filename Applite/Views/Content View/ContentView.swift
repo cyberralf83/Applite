@@ -7,11 +7,11 @@
 
 import SwiftUI
 import OSLog
-import ButtonKit
 
 struct ContentView: View {
     @EnvironmentObject var caskManager: CaskManager
-    
+    @EnvironmentObject var iCloudSyncManager: ICloudSyncManager
+
     /// Currently selected tab in the sidebar
     @State var selection: SidebarItem = .home
 
@@ -39,6 +39,9 @@ struct ContentView: View {
                 .disabled(modifyingBrew)
         } detail: {
             detailView
+        }
+        .onAppear {
+            caskManager.iCloudSyncManager = iCloudSyncManager
         }
         // Load all cask releated data
         .task {
