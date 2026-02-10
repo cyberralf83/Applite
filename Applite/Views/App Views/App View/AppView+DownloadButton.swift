@@ -14,10 +14,7 @@ extension AppView {
 
         @EnvironmentObject var caskManager: CaskManager
 
-        // Alerts
-        @State var showingPopover = false
         @State var showingBrewError = false
-        @State var showingForceInstallConfirmation = false
         @State var showCaveatsAndWarnings = false
 
         @State var buttonFill = false
@@ -44,7 +41,6 @@ extension AppView {
                 }
             }
             .disabled(cask.info.warning?.isDisabled ?? false)
-            .padding(.trailing, -8)
             .onHover { isHovering in
                 // Hover effect
                 withAnimation(.snappy) {
@@ -71,47 +67,6 @@ extension AppView {
             }
             .alert("Broken Brew Path", isPresented: $showingBrewError) {} message: {
                 Text(DependencyManager.brokenPathOrIstallMessage)
-            }
-
-            // More actions popover
-            Button() {
-                showingPopover = true
-            } label: {
-                Image(systemName: "chevron.down")
-                    .padding(.vertical)
-                    .contentShape(Rectangle())
-            }
-            .popover(isPresented: $showingPopover) {
-                VStack(alignment: .leading, spacing: 6) {
-                    // Open homepage
-                    if let homepageLink = cask.info.homepageURL {
-                        Link(destination: homepageLink, label: {
-                            Label("Homepage", systemImage: "house")
-                        })
-                        .foregroundColor(.primary)
-                    } else {
-                        Text("No homepage found")
-                            .fontWeight(.thin)
-                    }
-
-                    GetInfoButton(cask: cask)
-
-                    // Force install button
-                    Button {
-                        showingForceInstallConfirmation = true
-                    } label: {
-                        Label("Force Install", systemImage: "bolt.trianglebadge.exclamationmark.fill")
-                    }
-                }
-                .padding(8)
-                .buttonStyle(.plain)
-            }
-            .confirmationDialog("Are you sure you want to force install \(cask.info.name)? This will override any current installation!", isPresented: $showingForceInstallConfirmation) {
-                Button("Yes") {
-                    caskManager.install(cask, force: true)
-                }
-
-                Button("Cancel", role: .cancel) { }
             }
         }
     }

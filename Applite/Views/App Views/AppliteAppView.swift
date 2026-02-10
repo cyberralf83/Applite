@@ -22,7 +22,6 @@ struct AppliteAppView: View {
             Image("AppliteIcon")
                 .resizable()
                 .frame(width: 54, height: 54)
-                .padding(.leading, 5)
             
             // Name and description
             VStack(alignment: .leading) {
@@ -50,7 +49,11 @@ struct AppliteAppView: View {
             }
             .buttonStyle(.plain)
         }
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
         .frame(width: AppView.dimensions.width, height: AppView.dimensions.height)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 1)
     }
 }
 

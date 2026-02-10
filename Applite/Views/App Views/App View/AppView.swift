@@ -38,12 +38,16 @@ struct AppView: View {
     
     var body: some View {
         HStack {
-            IconAndDescriptionView(cask: cask)
+            IconAndDescriptionView(cask: cask, role: role)
             IconsAndWarnings(cask: cask)
             actionsView
         }
         .buttonStyle(.plain)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
         .frame(width: Self.dimensions.width, height: Self.dimensions.height)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 1)
         .alertManager(caskManager.alert)
     }
 }

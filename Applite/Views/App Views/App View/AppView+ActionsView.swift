@@ -29,7 +29,6 @@ extension AppView {
                 OpenAndManageView(cask: cask, deleteButton: false)
             } else {
                 DownloadButton(cask: cask)
-                    .padding(.trailing, 5)
             }
 
         case .update:
@@ -37,7 +36,6 @@ extension AppView {
 
         case .installed:
             OpenAndManageView(cask: cask, deleteButton: true)
-                .padding(.trailing, 5)
         }
     }
 

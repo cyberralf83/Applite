@@ -65,11 +65,19 @@ struct AppHistoryView: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 400)
 
-            Button("Open Settings") {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+            if #available(macOS 14.0, *) {
+                SettingsLink {
+                    Text("Open Settings")
+                }
+                .controlSize(.large)
+                .padding(.top, 4)
+            } else {
+                Button("Open Settings") {
+                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                }
+                .controlSize(.large)
+                .padding(.top, 4)
             }
-            .controlSize(.large)
-            .padding(.top, 4)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

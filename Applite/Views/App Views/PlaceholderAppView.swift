@@ -14,7 +14,7 @@ struct PlaceholderAppView: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .stroke(.gray, lineWidth: 3)
                 .frame(width: 40, height: 40)
-                .padding(.leading)
+                .padding(.leading, 2)
             
             // Placeholder text lines
             VStack(alignment: .leading) {
@@ -34,7 +34,11 @@ struct PlaceholderAppView: View {
             
             Spacer()
         }
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
         .frame(width: AppView.dimensions.width, height: AppView.dimensions.height)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 1)
     }
 }
 
