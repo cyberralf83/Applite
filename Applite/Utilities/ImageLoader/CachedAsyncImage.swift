@@ -22,6 +22,7 @@ struct CachedAsyncImage<Placeholder: View>: View {
             if let image {
                 Image(nsImage: image)
                     .resizable()
+                    .scaledToFit()
                     .transition(.opacity)
             } else {
                 placeholder()

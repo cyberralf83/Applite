@@ -40,8 +40,8 @@ struct AppIconView: View {
                     state = .failed
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 8))
             .frame(width: 54, height: 54)
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         } else {
             // App icon missing
             ZStack {
@@ -52,7 +52,7 @@ struct AppIconView: View {
                     .font(.system(size: 24, weight: .light))
             }
             .foregroundStyle(.gray)
-            .frame(width: 40, height: 40)
+            .frame(width: 54, height: 54)
         }
     }
 }
