@@ -31,7 +31,7 @@ extension AppView {
 
                 // Name and description
                 VStack(alignment: .leading) {
-                    HStack(spacing: 4) {
+                    HStack(spacing: 6) {
                         Button {
                             showToken.toggle()
                         } label: {
@@ -43,8 +43,8 @@ extension AppView {
                         Button {
                             showPopover = true
                         } label: {
-                            Text("...")
-                                .font(.system(size: 16, weight: .bold))
+                            Image(systemName: "ellipsis.circle")
+                                .font(.system(size: 14))
                                 .foregroundStyle(.secondary)
                         }
                         .buttonStyle(.plain)
