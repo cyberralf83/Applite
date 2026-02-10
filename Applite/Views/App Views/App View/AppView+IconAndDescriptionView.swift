@@ -19,7 +19,7 @@ extension AppView {
         @State private var showingForceInstallConfirmation = false
 
         var body: some View {
-            HStack {
+            HStack(alignment: .top) {
                 if let iconURL = URL(string: "https://github.com/App-Fair/appcasks/releases/download/cask-\(cask.info.token)/AppIcon.png"),
                    let faviconURL = URL(string: "https://icon.horse/icon/\(cask.info.homepageURL?.host ?? "")") {
                     AppIconView(
@@ -64,6 +64,7 @@ extension AppView {
 
                     Text(cask.info.description)
                         .foregroundColor(.secondary)
+                        .lineLimit(2)
                 }
 
                 Spacer()

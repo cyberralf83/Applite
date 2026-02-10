@@ -22,26 +22,29 @@ struct AppIconView: View {
 
     var body: some View {
         if state != .failed {
-            CachedAsyncImage(
-                url: state == .showingAppIcon ? iconURL : faviconURL,
-                cacheKey: cacheKey
-            ) {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(.gray)
-                    .shimmering()
-            }
-            .onFailure {
-                switch state {
-                case .showingAppIcon:
-                    state = .showingFavicon
-                case .showingFavicon:
-                    state = .failed
-                default:
-                    state = .failed
-                }
-            }
-            .frame(width: 54, height: 54)
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            Color.clear
+                .frame(width: 46, height: 46)
+                .overlay(
+                    CachedAsyncImage(
+                        url: state == .showingAppIcon ? iconURL : faviconURL,
+                        cacheKey: cacheKey
+                    ) {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(.gray)
+                            .shimmering()
+                    }
+                    .onFailure {
+                        switch state {
+                        case .showingAppIcon:
+                            state = .showingFavicon
+                        case .showingFavicon:
+                            state = .failed
+                        default:
+                            state = .failed
+                        }
+                    }
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         } else {
             // App icon missing
             ZStack {
@@ -52,7 +55,7 @@ struct AppIconView: View {
                     .font(.system(size: 24, weight: .light))
             }
             .foregroundStyle(.gray)
-            .frame(width: 54, height: 54)
+            .frame(width: 46, height: 46)
         }
     }
 }

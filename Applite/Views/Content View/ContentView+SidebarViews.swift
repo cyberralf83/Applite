@@ -33,6 +33,9 @@ extension ContentView {
             Label("App Migration", systemImage: "square.and.arrow.up.on.square")
                 .tag(SidebarItem.appMigration)
 
+            Label("All Apps", systemImage: "square.grid.2x2")
+                .tag(SidebarItem.allApps)
+
             Section("Categories") {
                 ForEach(caskManager.categories) { category in
                     Label(category.localizedName, systemImage: category.sfSymbol)

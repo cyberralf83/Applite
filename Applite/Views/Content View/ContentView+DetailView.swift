@@ -38,6 +38,9 @@ extension ContentView {
         case .appMigration:
             AppMigrationView()
             
+        case .allApps:
+            AllAppsView(caskCollection: caskManager.allCasks)
+
         case .appCategory(let category):
             CategoryView(category: category)
 

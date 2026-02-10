@@ -9,7 +9,8 @@ import SwiftUI
 
 extension ContentView {
     func searchAndSort() async {
-        await caskManager.allCasks.search(query: searchInput, diffScroreThreshold: 0.3, limitResults: 25)
+        let query = String(searchInput.prefix(30))
+        await caskManager.allCasks.search(query: query, diffScroreThreshold: 0.3, limitResults: 25)
         if hideUnpopularApps { await filterUnpopular() }
         if hideDisabledApps { await filterDisabled() }
         await sortCasks(ignoreBestMatch: true)

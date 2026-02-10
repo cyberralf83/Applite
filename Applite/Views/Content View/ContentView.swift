@@ -33,6 +33,11 @@ struct ContentView: View {
 
     let logger = Logger()
 
+    private var searchSuggestions: [Cask] {
+        guard !searchInput.isEmpty, showSearchResults else { return [] }
+        return Array(caskManager.allCasks.casksMatchingSearch.prefix(5))
+    }
+
     var body: some View {
         NavigationSplitView {
             sidebarViews
@@ -49,27 +54,35 @@ struct ContentView: View {
         }
         // MARK: - Search
         .searchable(text: $searchInput, placement: .sidebar)
-        // Submit search
+        // Live debounced search
+        .task(id: searchInput, debounceTime: .seconds(0.3)) {
+            let trimmed = String(searchInput.prefix(30))
+            if !trimmed.isEmpty {
+                await searchAndSort()
+                showSearchResults = true
+                if selection != .home {
+                    selection = .home
+                }
+            } else {
+                showSearchResults = false
+            }
+        }
+        // Instant search on Enter key
         .onSubmit(of: .search) {
             Task {
-                await searchAndSort()
-
                 if !searchInput.isEmpty {
+                    await searchAndSort()
                     showSearchResults = true
-
-                    if selection != .home {
-                        selection = .home
-                    }
+                    if selection != .home { selection = .home }
                 }
             }
         }
-        // Clear search
-        .onChange(of: searchInput) { newValue in
-            // Limit search characters
-            searchInput = String(searchInput.prefix(30))
-
-            if searchInput.isEmpty {
-                showSearchResults = false
+        // Search suggestions
+        .searchSuggestions {
+            if !searchInput.isEmpty {
+                ForEach(searchSuggestions) { cask in
+                    Text(cask.info.name).searchCompletion(cask.info.name)
+                }
             }
         }
         // Apply sorting options
